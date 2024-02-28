@@ -11,7 +11,7 @@ $(document).ready(() => {
     //clear the <tweetsDiv>
     $('#tweets').html('');
 
-    const $tweets = streams.home.map((tweet) => {
+    const $tweets = streams.home.slice(0).reverse().map((tweet) => {
       const $tweet = $('<div></div>');
       const text = `@${tweet.user}: ${tweet.message}`;
 
