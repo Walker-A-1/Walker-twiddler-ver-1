@@ -7,7 +7,9 @@ $(document).ready(() => {
   const $tweetsDiv = $('<div id=tweets>');
   $body.append($tweetsDiv);
   //function to clear tweets and add new tweets
-  let displayTweets = () => {
+  //add an optional user param
+  //specifying you only want tweets from that user
+  let displayTweets = (user) => {
     //clear the <tweetsDiv>
     $('#tweets').html('');
 
@@ -43,11 +45,40 @@ $(document).ready(() => {
         }
       }
       //add the ability to display how long ago the tweets were made
-      const text = `@${tweet.user}: ${tweet.message}. Tweet created ${timeAgo(tweet.created_at)}.`;
+      /////////////////
+      //Plan for how to make the username clickable. When username clicked show only the tweets of that user
+      //for the text variable below make a separate <div> to store the username
+      //for the username div make it have a click listener
+      //when that name is clicked clear #tweets
+      //and populate the tweet <div> with only tweets from this user
+      //reference this users tweets with streams.users['username']
+      //where the username is the current user
+      /////////////////
+      const text = `${tweet.message}. Tweet created ${timeAgo(tweet.created_at)}.`;
+      //make a <div> for the username
+      const $userDiv = $('<div></div>')
+      .append(`@${tweet.user}`)
+      .on('click', () => {
+        //call diplayTweets()
+        //pass in current user
+        displayTweets(tweet.user);
+      });
       //
       $tweet.text(text);
+      //move $userDiv to the beginning of $tweet
+      $userDiv.prependTo($tweet);
 
-      return $tweet;
+      //add if statement asking: if a user is present then only retrieve tweets from that user
+        //if user does not match current user then return nothing
+      //else there was no user present
+        //add the tweet
+      if(user) {
+        if(user === tweet.user) {
+          return $tweet;
+        }
+      } else {
+        return $tweet;
+      }
     });
     $tweetsDiv.append($tweets);
   }
