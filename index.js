@@ -101,5 +101,10 @@ $(document).ready(() => {
   });
   //put button at top of body
   $buttondiv.prependTo($body);
-
+  /////////////////////
+  //Plan: allow the website user to tweet
+  //1. add a text box for the website user to type stuff
+  //2. add a button that says `tweet`
+  //3. when the button is pressed draft the tweet and add it to streams
+  /////////////////////
 });
