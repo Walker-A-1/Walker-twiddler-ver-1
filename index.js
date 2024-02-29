@@ -107,4 +107,28 @@ $(document).ready(() => {
   //2. add a button that says `tweet`
   //3. when the button is pressed draft the tweet and add it to streams
   /////////////////////
+  //create a form tag with id 'myForm'
+  const $myForm = $('<form>');
+  //make a div tag
+  const $tweetMessageDiv = $('<div>');
+  //add a <label> with a for attribute of tweetContent
+  //text is Write tweet
+  const $TweetMessageLabel = $('<label for="tweetContent">Write tweet</label>')
+  $TweetMessageLabel.appendTo($tweetMessageDiv);
+  //in div above add a <textarea> with id tweetContent
+  const $TweetMessageContent = $('<textarea id="tweetContent" name="user_message">');
+  $TweetMessageContent.appendTo($tweetMessageDiv);
+  //append above div to #myForm
+  $tweetMessageDiv.appendTo($myForm);
+  //prepend #myForm to <body>
+  $myForm.prependTo($body);
+  //make a button tag
+  //attribute is type equal to 'submit'
+  //innerText is 'Tweet'
+  //append button tag to #myForm
+  const $button = $('<button type="submit">Tweet</button>')
+  .appendTo($myForm);
+
+  //getting the form data from above
+  console.log($('form').serializeArray());
 });
