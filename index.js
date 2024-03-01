@@ -63,7 +63,6 @@ $(document).ready(() => {
         //pass in current user
         displayTweets(tweet.user);
       });
-      //
       $tweet.text(text);
       //move $userDiv to the beginning of $tweet
       $userDiv.prependTo($tweet);
@@ -105,8 +104,40 @@ $(document).ready(() => {
   //Plan: allow the website user to tweet
   //1. add a text box for the website user to type stuff
   //2. add a button that says `tweet`
-  //3. when the button is pressed draft the tweet and add it to streams
+  //3. when the button is pressed send the users message back to here
+  //4. receive the text data here
+  //5. make the tweet into the right format
+  //{
+    //user: 'You',
+    //message: [user generated data],
+    //created_at: new Date
+  //}
+  //6. pass the object above into the addTweet() function
+  //7. refresh tweets by clicking the Refresh tweets button
   /////////////////////
+  //create a function to submit the form data
+  const submitMessage = () => {
+    //if not username was given assign it to 'You'
+    if($('#username_input').val()) {
+      //assign `window.visitor` to the username input
+      window.visitor = $('#username_input').val();
+    } else {
+      window.visitor = 'You';
+      streams.users['You'] = [];
+    }
+    //if the current user is not defined
+    //define it
+    if(!Array.isArray(streams.users[$('#username_input').val()])) {
+      streams.users[$('#username_input').val()] = [];
+    }
+    //call the writeTweet function
+      //passing in the users message for parameter
+    writeTweet($('#tweetContent').val());
+    //clear the tweetContent text box
+
+    //call displayTweets to reload the tweets with the new one
+    displayTweets();
+  }
   //create a form tag with id 'myForm'
   const $myForm = $('<form>');
   //make a div tag
@@ -114,21 +145,25 @@ $(document).ready(() => {
   //add a <label> with a for attribute of tweetContent
   //text is Write tweet
   const $TweetMessageLabel = $('<label for="tweetContent">Write tweet</label>')
-  $TweetMessageLabel.appendTo($tweetMessageDiv);
+  $TweetMessageLabel.appendTo($myForm);
+  //in div above add a <input> with attributes type = 'text', name = 'user_name', id = 'username_input' placeholder = 'username?'
+  const $usernameInput = $('<input type="text" id="username_input" placeholder="username?">');
+  $usernameInput.appendTo($myForm);
   //in div above add a <textarea> with id tweetContent
-  const $TweetMessageContent = $('<textarea id="tweetContent" name="user_message">');
-  $TweetMessageContent.appendTo($tweetMessageDiv);
-  //append above div to #myForm
-  $tweetMessageDiv.appendTo($myForm);
+  const $TweetMessageContent = $('<textarea id="tweetContent" placeholder="Message?">');
+  $TweetMessageContent.appendTo($myForm);
+  //append above #myForm to div
+  $myForm.appendTo($tweetMessageDiv);
   //prepend #myForm to <body>
-  $myForm.prependTo($body);
+  $tweetMessageDiv.prependTo($body);
   //make a button tag
   //attribute is type equal to 'submit'
   //innerText is 'Tweet'
   //append button tag to #myForm
-  const $button = $('<button type="submit">Tweet</button>')
+  const $button = $('<button type="submit">Submit</button>')
   .appendTo($myForm);
-
-  //getting the form data from above
-  console.log($('form').serializeArray());
+  $myForm.on('submit', (e) => {
+    e.preventDefault();
+    submitMessage();
+  });
 });
