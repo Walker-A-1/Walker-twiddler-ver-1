@@ -4,7 +4,8 @@ $(document).ready(() => {
   $body.html(''); //clear the body
 
   //make a div for tweets
-  const $tweetsDiv = $('<div id=tweets>');
+  const $tweetsDiv = $('<div id=tweets>')
+  .css({'float': 'right', 'background-color': 'rgb(221, 221, 221)'});
   $body.append($tweetsDiv);
   //function to clear tweets and add new tweets
   //add an optional user param
@@ -97,7 +98,8 @@ $(document).ready(() => {
   //when the <p> is clicked refresh tweets
   .on('click', () => {
     return displayTweets();
-  });
+  })
+  .css('float', 'right');
   //put button at top of body
   $buttondiv.prependTo($body);
   /////////////////////
@@ -145,12 +147,15 @@ $(document).ready(() => {
   //add a <label> with a for attribute of tweetContent
   //text is Write tweet
   const $TweetMessageLabel = $('<label for="tweetContent">Write tweet</label>')
+  .css('float', 'left')
   $TweetMessageLabel.appendTo($myForm);
   //in div above add a <input> with attributes type = 'text', name = 'user_name', id = 'username_input' placeholder = 'username?'
-  const $usernameInput = $('<input type="text" id="username_input" placeholder="username?">');
+  const $usernameInput = $('<input type="text" id="username_input" placeholder="username?">')
+  .css({'float': 'left', 'position': 'relative', 'top': '20px', 'right': '75px'});//move underneath write tweet label
   $usernameInput.appendTo($myForm);
   //in div above add a <textarea> with id tweetContent
-  const $TweetMessageContent = $('<textarea id="tweetContent" placeholder="Message?">');
+  const $TweetMessageContent = $('<textarea id="tweetContent" placeholder="Message?">')
+  .css({'float': 'left', 'position': 'relative', 'top': '50px', 'right': '220px'});
   $TweetMessageContent.appendTo($myForm);
   //append above #myForm to div
   $myForm.appendTo($tweetMessageDiv);
@@ -161,7 +166,8 @@ $(document).ready(() => {
   //innerText is 'Tweet'
   //append button tag to #myForm
   const $button = $('<button type="submit">Submit</button>')
-  .appendTo($myForm);
+  .appendTo($myForm)
+  .css({'float': 'left', 'position': 'relative', 'top': '95px', 'right': '402px'});
   $myForm.on('submit', (e) => {
     e.preventDefault();
     submitMessage();
